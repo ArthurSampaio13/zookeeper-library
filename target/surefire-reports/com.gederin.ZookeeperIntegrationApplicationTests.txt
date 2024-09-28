@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.gederin.ZookeeperIntegrationApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.635 s <<< FAILURE! - in com.gederin.ZookeeperIntegrationApplicationTests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.I0Itec.zkclient.exception.ZkMarshallingError: java.io.StreamCorruptedException: invalid stream header: 686F7374
+Caused by: java.io.StreamCorruptedException: invalid stream header: 686F7374
+
