@@ -1,8 +1,14 @@
 package com.zookeeper.useCases;
 
+import com.zookeeper.DTO.CreateBookDTO;
 import com.zookeeper.model.Book;
 import com.zookeeper.repository.BookRepository;
 
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +20,30 @@ import lombok.RequiredArgsConstructor;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public void addBook(Book book) {
-        List<Book> books = bookRepository.getBooks();
-        boolean exists = books.stream()
-                .anyMatch(b -> b.getId().equals(book.getId()));
-        if (exists) {
-            throw new IllegalArgumentException("Book with id " + book.getId() + " already exists");
+    private final ZooKeeper zooKeeper;
+
+    public void addBook(CreateBookDTO createBookDTO) throws InterruptedException, KeeperException {
+
+        Book book = new Book(null, createBookDTO.getTitle(), createBookDTO.getGenre(),
+                createBookDTO.getDescription(), createBookDTO.getAuthor(),
+                createBookDTO.getReleaseYear());
+
+        String parentPath = "/books";
+
+        if (zooKeeper.exists(parentPath, false) == null) {
+            zooKeeper.create(parentPath, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         }
+
+        String path = parentPath + "/book-";
+        String createdPath = zooKeeper.create(path, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
+
+        String id = createdPath.substring(path.length());
+
+        book.setId(id);
+
         bookRepository.getBooks().add(book);
+
+        zooKeeper.delete(createdPath, -1);
     }
 
     public void addBooks(List<Book> books) {
