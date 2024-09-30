@@ -11,8 +11,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().info(new Info()
-                        .title("OpinaCity")
-                        .description("API responsável pelo gerenciamento de reclamações sobre problemas municipais")
+                        .title("zookeeper-library")
+                        .description("Utilizando zookeeper para sistemas distribuidos")
                         .version("1.0"));
     }
 }
