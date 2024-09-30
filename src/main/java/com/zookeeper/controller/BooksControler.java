@@ -10,11 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -38,9 +34,24 @@ public class BooksControler {
     private final RestTemplate restTemplate;
 
     @GetMapping("/")
-    public List<Book> getAllBooks() {
+    public ResponseEntity<List<Book>> getAllBooks() {
         log.info("get all books from the database...");
-        return bookService.getAllBooks();
+        List<Book> books = bookService.getAllBooks();
+        return ResponseEntity.ok().body(books);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable String id) {
+        log.info("get book by id from the database...");
+        Book book = bookService.getBook(id);
+        return ResponseEntity.ok().body(book);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Void> deleteBook (@PathVariable String id) {
+        log.info("get book by id from the database...");
+        bookService.deleteBook(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add")

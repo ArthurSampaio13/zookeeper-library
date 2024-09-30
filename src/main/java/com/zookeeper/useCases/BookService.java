@@ -15,6 +15,12 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public void addBook(Book book) {
+        List<Book> books = bookRepository.getBooks();
+        boolean exists = books.stream()
+                .anyMatch(b -> b.getId().equals(book.getId()));
+        if (exists) {
+            throw new IllegalArgumentException("Book with id " + book.getId() + " already exists");
+        }
         bookRepository.getBooks().add(book);
     }
 
@@ -34,5 +40,8 @@ public class BookService {
         return bookRepository.getBooks();
     }
 
-
+    public void deleteBook(String id) {
+        bookRepository.getBooks()
+                .removeIf(book -> book.getId().equals(id));
+    }
 }

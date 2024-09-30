@@ -7,6 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class Book {
     private String id;
+    private String title;
+    private String genre;
+    private String description;
     private String author;
-    private int year;
+    private Integer releaseYear;
 }
