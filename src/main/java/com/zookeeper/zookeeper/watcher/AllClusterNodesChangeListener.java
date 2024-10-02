@@ -17,15 +17,9 @@ public class AllClusterNodesChangeListener implements IZkChildListener {
 
     private final ClusterInformationService clusterInformationService;
 
-    /**
-     * This method will be invoked for any change in /all_nodes children
-     *
-     * @param parent "/all_nodes"
-     * @param nodes  current list of children for all_nodes. All persistent znodes in the cluster
-     */
     @Override
     public void handleChildChange(String parent, List<String> nodes) {
-        log.info("current list of all persistent znodes in the cluster: {}", nodes);
+        log.info("Lista de persistent znodes no cluster: {}", nodes);
 
         clusterInformationService.rebuildAllNodesList(nodes);
     }

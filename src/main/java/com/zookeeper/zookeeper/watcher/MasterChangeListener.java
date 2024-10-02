@@ -22,23 +22,17 @@ public class MasterChangeListener implements IZkChildListener {
     private final ZookeeperService zookeeperService;
     private final ClusterInformationService clusterInformationService;
 
-    /**
-     * listens for deletion of sequential znode under /election znode and updates the clusterinfo
-     */
     @Override
     public void handleChildChange(String parentPath, List<String> currentChildren) {
         if (currentChildren.isEmpty()) {
-            throw new RuntimeException("No node exists to select master!!");
+            throw new RuntimeException("Sem node mestre");
         } else {
-            //get least sequenced znode
             Collections.sort(currentChildren);
             String masterZNode = currentChildren.get(0);
 
-            // once znode is fetched, fetch the znode data to get the hostname of new leader
             String masterNode = zookeeperService.getZNodeData(ELECTION_NODE.concat("/").concat(masterZNode));
-            log.info("new master is: {}", masterNode);
+            log.info("O novo mestre é: {}", masterNode);
 
-            //update the cluster info with new leader
             clusterInformationService.setMasterNode(masterNode);
         }
     }

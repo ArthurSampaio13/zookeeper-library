@@ -28,33 +28,27 @@ public class ConnectStateChangeListener implements IZkStateListener {
 
     @Override
     public void handleStateChanged(KeeperState keeperState) {
-        log.info("current state: {}", keeperState.name());
+        log.info("Estado atual: {}", keeperState.name());
     }
 
     @Override
     public void handleNewSession() throws Exception {
-        log.info("connected to zookeeper");
+        log.info("Conectado ao zookeeper");
 
         syncDataFromMaster();
 
-        /**
-         * Add new znode to /live_nodes and update local cluster information
-         */
-        zookeeperService.createAndAddToLiveNodes(config.getHostPort(), "cluster node");
+        zookeeperService.createAndAddToLiveNodes(config.getHostPort(), "Cluster node");
 
         List<String> liveNodes = zookeeperService.getLiveNodesInZookeeperCluster();
         clusterInformationService.rebuildLiveNodesList(liveNodes);
 
-        /**
-         * Retry creating znode under /election
-         */
         zookeeperService.createNodeInElectionZnode(config.getHostPort());
         clusterInformationService.setMasterNode(zookeeperService.getLeaderNodeData());
     }
 
     @Override
     public void handleSessionEstablishmentError(Throwable throwable) {
-        log.error("could not establish zookeeper session");
+        log.error("Não foi possível estabelecer uma zookeeper session");
     }
 
     private void syncDataFromMaster() {

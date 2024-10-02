@@ -17,15 +17,9 @@ public class LiveClusterNodesChangeListener implements IZkChildListener {
 
     private final ClusterInformationService clusterInformationService;
 
-    /**
-     * This method will be invoked for any change in /live_nodes children
-     *
-     * @param parentPath "/all_nodes"
-     * @param currentChildren  current list of children for /live_nodes. All live znodes in the cluster
-     */
     @Override
     public void handleChildChange(String parentPath, List<String> currentChildren) {
-        log.info("current live size: {}", currentChildren.size());
+        log.info("Tamanho on: {}", currentChildren.size());
         clusterInformationService.rebuildLiveNodesList(currentChildren);
     }
 }

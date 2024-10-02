@@ -1,7 +1,6 @@
 com/zookeeper/repository/ClusterInformationRepository.class
 com/zookeeper/repository/BookRepository.class
 com/zookeeper/useCases/ClusterInformationService.class
-com/zookeeper/controller/BooksControler.class
 com/zookeeper/ZookeeperIntegrationApplication.class
 com/zookeeper/zookeeper/watcher/MasterChangeListener.class
 com/zookeeper/model/Book.class
