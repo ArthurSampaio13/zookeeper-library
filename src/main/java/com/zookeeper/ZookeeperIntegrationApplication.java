@@ -64,52 +64,28 @@ public class ZookeeperIntegrationApplication implements ApplicationListener<Cont
         zookeeperService.closeConnection();
     }
 
-    /**
-     * Add application to zookeeper cluster by creating persistent znode under /all_nodes path.
-     * Name of the znode will be host:port
-     */
     private void addCurrentNodeToAllNodesList() {
-        zookeeperService.createAndAddToAllNodes(config.getHostPort(), "cluster node");
+        zookeeperService.createAndAddToAllNodes(config.getHostPort(), "Cluster node");
 
         List<String> allNodes = zookeeperService.getAllNodesInZookeeperCluster();
-        log.info("current znodes in allNodes parent znode: {}", allNodes);
+        log.info("Os znodes em allNodes parent znode: {}", allNodes);
 
-        /**
-         * Update local cluster information for havin up to date /all_nodes representation
-         */
         clusterInformationService.rebuildAllNodesList(allNodes);
     }
 
-    /**
-     * Add application to /election list and define a cluster master
-     */
     private void addCurrentNodeToElectionNodesList() {
         zookeeperService.createNodeInElectionZnode(config.getHostPort());
-
-        /**
-         * Update local cluster information for having up to date master node representation
-         */
         clusterInformationService.setMasterNode(zookeeperService.getLeaderNodeData());
     }
 
-    /**
-     * Add application to zookeeper /live_nodes list
-     */
     private void addCurrentNodeToLiveNodesList() {
-        zookeeperService.createAndAddToLiveNodes(config.getHostPort(), "cluster node");
+        zookeeperService.createAndAddToLiveNodes(config.getHostPort(), "Cluster node");
 
         List<String> liveNodes = zookeeperService.getLiveNodesInZookeeperCluster();
-        log.info("current znodes in liveNodes parent znode: {}", liveNodes);
-
-        /**
-         * Update local cluster information for having up to date /live_nodes representation
-         */
+        log.info("Os znodes em liveNodes parent znode: {}", liveNodes);
         clusterInformationService.rebuildLiveNodesList(liveNodes);
     }
 
-    /**
-     * Register all needful zookeeper watchers
-     */
     private void registerZookeeperWatchers (){
         zookeeperService.registerChildrenChangeWatcher(ELECTION_NODE, masterChangeListener);
         zookeeperService.registerChildrenChangeWatcher(LIVE_NODES, liveClusterNodesChangeListener);
