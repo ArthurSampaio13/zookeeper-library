@@ -62,8 +62,15 @@ public class BookService {
         return bookRepository.getBooks();
     }
 
-    public void deleteBook(String id) {
-        bookRepository.getBooks()
-                .removeIf(book -> book.getId().equals(id));
+    public void deleteBook(String id) throws KeeperException, InterruptedException {
+        String path = "/books/book-" + id;
+        if (zooKeeper.exists(path, false) != null) {
+            zooKeeper.delete(path, -1);
+            System.out.println("Nó deletado: " + path);
+        } else {
+            System.out.println("Nó não existe");
+        }
+
+        bookRepository.deleteById(id);
     }
 }
