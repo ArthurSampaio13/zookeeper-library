@@ -1,6 +1,6 @@
 package com.zookeeper.controller;
 
-import com.zookeeper.DTO.CreateBookDTO;
+import com.zookeeper.dto.CreateBookDTO;
 import com.zookeeper.config.Config;
 import com.zookeeper.model.Book;
 import com.zookeeper.useCases.BookService;
@@ -20,7 +20,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import static org.springframework.util.StringUtils.isEmpty;
 

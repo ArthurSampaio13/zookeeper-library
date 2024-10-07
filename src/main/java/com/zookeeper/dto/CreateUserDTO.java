@@ -1,4 +1,4 @@
-package com.zookeeper.DTO;
+package com.zookeeper.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

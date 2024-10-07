@@ -1,4 +1,4 @@
-package com.zookeeper.DTO;
+package com.zookeeper.dto;
 
 import com.zookeeper.model.Book;
 import com.zookeeper.model.User;
