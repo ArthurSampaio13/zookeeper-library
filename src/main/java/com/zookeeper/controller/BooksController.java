@@ -60,7 +60,6 @@ public class BooksController {
             return ResponseEntity.status(500).body("Erro inesperado: " + e.getMessage());
         }
     }
-
     @PostMapping("/add")
     public ResponseEntity<String> addBook(HttpServletRequest request, @RequestBody CreateBookDTO book) throws InterruptedException, KeeperException {
         String requestFrom = request.getHeader("request_from");
@@ -68,7 +67,7 @@ public class BooksController {
 
         if (!isEmpty(requestFrom) && requestFrom.equalsIgnoreCase(masterNode)) {
             bookService.addBook(book);
-            return ResponseEntity.ok("SUCCESS");
+            return ResponseEntity.ok("SUCCESS: Book added in ZooKeeper.");
         }
 
         if (isMaster()) {
@@ -80,7 +79,6 @@ public class BooksController {
                     successCount++;
                 } else {
                     HttpHeaders headers = new HttpHeaders();
-
                     headers.add("request_from", config.getHostPort());
                     headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -93,12 +91,10 @@ public class BooksController {
                 }
             }
 
-            return ResponseEntity.ok()
-                    .body("Successfully update " + successCount + " nodes");
+            return ResponseEntity.ok("Successfully updated " + successCount + " nodes");
         } else {
             String requestUrl = "http://" + masterNode + "/v1/books/add" + "/";
             HttpHeaders headers = new HttpHeaders();
-
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<CreateBookDTO> entity = new HttpEntity<>(book, headers);
@@ -106,9 +102,25 @@ public class BooksController {
         }
     }
 
+
     private boolean isMaster() {
         return config.getHostPort()
                 .equals(clusterInformationService.getMasterNode());
     }
+
+    @GetMapping("/zookeeper/{id}")
+    public ResponseEntity<Book> getBookFromZooKeeper(@PathVariable String id) {
+        try {
+            Book book = bookService.getBookFromZooKeeper(id);
+            if (book != null) {
+                return ResponseEntity.ok(book);
+            } else {
+                return ResponseEntity.status(404).body(null); // Livro não encontrado
+            }
+        } catch (KeeperException | InterruptedException e) {
+            return ResponseEntity.status(500).body(null); // Erro ao acessar o ZooKeeper
+        }
+    }
+
 
 }
