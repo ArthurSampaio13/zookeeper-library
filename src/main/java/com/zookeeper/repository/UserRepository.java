@@ -25,7 +25,7 @@ public class UserRepository {
                 .findFirst();
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 

@@ -27,14 +27,12 @@ public class UserController {
     private final ClusterInformationService clusterInformationService;
     private final RestTemplate restTemplate;
 
-    // Read all users
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok().body(users);
     }
 
-    // Read a specific user by ID
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         try {
@@ -45,7 +43,6 @@ public class UserController {
         }
     }
 
-    // Create a new user
     @PostMapping("/add")
     public ResponseEntity<User> createUser(HttpServletRequest request, @RequestParam String name, @RequestParam String email) throws InterruptedException, KeeperException {
         String requestFrom = request.getHeader("request_from");
@@ -82,8 +79,6 @@ public class UserController {
         }
     }
 
-
-    // Delete a user by ID
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable String userId) {
         try {
@@ -99,7 +94,6 @@ public class UserController {
         }
     }
 
-    // Helper method to check if the node is the master
     private boolean isMaster() {
         return config.getHostPort().equals(clusterInformationService.getMasterNode());
     }

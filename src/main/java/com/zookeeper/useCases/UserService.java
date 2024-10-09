@@ -58,7 +58,7 @@ public class UserService {
         } else {
             System.out.println("User not found");
         }
-        userRepository.deleteById(UUID.fromString(id));
+        userRepository.deleteById(id);
 
 
     }
