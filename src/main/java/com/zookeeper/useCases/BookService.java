@@ -23,8 +23,11 @@ public class BookService {
     private final ZooKeeper zooKeeper;
 
     public void addBook(CreateBookDTO createBookDTO) throws InterruptedException, KeeperException {
+
+        int idBook = (bookRepository.getBooks().size()) + 1;
+
         // Cria o objeto Book a partir do DTO
-        Book book = new Book(null, createBookDTO.getTitle(), createBookDTO.getGenre(),
+        Book book = new Book(Integer.toString(idBook), createBookDTO.getTitle(), createBookDTO.getGenre(),
                 createBookDTO.getDescription(), createBookDTO.getAuthor(),
                 createBookDTO.getReleaseYear());
 
