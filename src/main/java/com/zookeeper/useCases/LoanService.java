@@ -27,7 +27,7 @@ public class LoanService {
     private final LoanRepository loanRepository;
     private final ZooKeeper zooKeeper;
 
-    public void addLoan(UUID idUser, String idBook) throws InterruptedException, KeeperException {
+    public void addLoan(String idUser, String idBook) throws InterruptedException, KeeperException {
         Optional<User> userOpt = userRepository.findById(String.valueOf(idUser));
         Optional<Book> bookOpt = bookRepository.findById(idBook);
 

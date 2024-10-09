@@ -47,13 +47,14 @@ public class UserController {
 
     // Create a new user
     @PostMapping("/add")
-    public ResponseEntity<String> createUser(HttpServletRequest request, @RequestParam String name, @RequestParam String email) throws InterruptedException, KeeperException {
+    public ResponseEntity<User> createUser(HttpServletRequest request, @RequestParam String name, @RequestParam String email) throws InterruptedException, KeeperException {
         String requestFrom = request.getHeader("request_from");
         String masterNode = clusterInformationService.getMasterNode();
+        User createdUser = new User();
 
         if (!isEmpty(requestFrom) && requestFrom.equalsIgnoreCase(masterNode)) {
-            userService.createUser(name, email);
-            return ResponseEntity.ok("User created successfully.");
+            createdUser = userService.createUser(name, email);
+            return ResponseEntity.ok(createdUser);
         }
 
         if (isMaster()) {
@@ -61,7 +62,7 @@ public class UserController {
             int successCount = 0;
             for (String node : liveNodes) {
                 if (config.getHostPort().equals(node)) {
-                    userService.createUser(name, email);
+                    createdUser = userService.createUser(name, email);
                     successCount++;
                 } else {
                     HttpHeaders headers = new HttpHeaders();
@@ -69,16 +70,18 @@ public class UserController {
                     headers.setContentType(MediaType.APPLICATION_JSON);
 
                     String requestUrl = "http://" + node + "/v1/users/add";
-                    restTemplate.postForObject(requestUrl, null, String.class);
+                    createdUser = restTemplate.postForObject(requestUrl, null, User.class);
                     successCount++;
                 }
             }
-            return ResponseEntity.ok("Successfully updated " + successCount + " nodes.");
+            return ResponseEntity.ok(createdUser);
         } else {
             String requestUrl = "http://" + masterNode + "/v1/users/add";
-            return restTemplate.postForEntity(requestUrl, null, String.class);
+            createdUser = restTemplate.postForObject(requestUrl, null, User.class);
+            return ResponseEntity.ok(createdUser);
         }
     }
+
 
     // Delete a user by ID
     @DeleteMapping("/{userId}")

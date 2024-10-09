@@ -17,7 +17,7 @@ public class UserService {
 
     private final ZooKeeper zooKeeper;
 
-    public void createUser(String name, String email) throws InterruptedException, KeeperException {
+    public User createUser(String name, String email) throws InterruptedException, KeeperException {
 
         User user = new
                 User(null, name, email);
@@ -34,6 +34,7 @@ public class UserService {
         userRepository.findAll().add(user);
         zooKeeper.delete(createdPath, -1);
 
+        return user;
     }
 
     public User getUser(String id) throws InterruptedException, KeeperException {
