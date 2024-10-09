@@ -1,6 +1,6 @@
 package com.zookeeper.useCases;
 
-import com.zookeeper.dto.CreateBookDTO;
+import com.zookeeper.dto.request.BookRequestDTO;
 import com.zookeeper.model.Book;
 import com.zookeeper.repository.BookRepository;
 
@@ -21,7 +21,7 @@ public class BookService {
 
     private final ZooKeeper zooKeeper;
 
-    public void addBook(CreateBookDTO createBookDTO) throws InterruptedException, KeeperException {
+    public void addBook(BookRequestDTO createBookDTO) throws InterruptedException, KeeperException {
 
         Book book = new Book(null, createBookDTO.getTitle(), createBookDTO.getGenre(),
                 createBookDTO.getDescription(), createBookDTO.getAuthor(),

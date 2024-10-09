@@ -1,7 +1,7 @@
 package com.zookeeper.controller;
 
-import com.zookeeper.dto.CreateBookDTO;
 import com.zookeeper.config.Config;
+import com.zookeeper.dto.request.BookRequestDTO;
 import com.zookeeper.model.Book;
 import com.zookeeper.useCases.BookService;
 import com.zookeeper.useCases.ClusterInformationService;
@@ -61,7 +61,7 @@ public class BooksController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addBook(HttpServletRequest request, @RequestBody CreateBookDTO book) throws InterruptedException, KeeperException {
+    public ResponseEntity<String> addBook(HttpServletRequest request, @RequestBody BookRequestDTO book) throws InterruptedException, KeeperException {
         String requestFrom = request.getHeader("request_from");
         String masterNode = clusterInformationService.getMasterNode();
 
@@ -83,7 +83,7 @@ public class BooksController {
                     headers.add("request_from", config.getHostPort());
                     headers.setContentType(MediaType.APPLICATION_JSON);
 
-                    HttpEntity<CreateBookDTO> entity = new HttpEntity<>(book, headers);
+                    HttpEntity<BookRequestDTO> entity = new HttpEntity<>(book, headers);
 
                     String requestUrl = "http://" + node + "/v1/books/add" + "/";
                     restTemplate.exchange(requestUrl, HttpMethod.POST, entity, String.class).getBody();
@@ -100,7 +100,7 @@ public class BooksController {
 
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<CreateBookDTO> entity = new HttpEntity<>(book, headers);
+            HttpEntity<BookRequestDTO> entity = new HttpEntity<>(book, headers);
             return restTemplate.exchange(requestUrl, HttpMethod.POST, entity, String.class);
         }
     }

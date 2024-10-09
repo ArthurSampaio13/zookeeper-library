@@ -1,12 +1,16 @@
 package com.zookeeper.repository;
 
 import com.zookeeper.model.User;
+import lombok.Data;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
+@Data
 public class UserRepository {
 
     private final List<User> users = new ArrayList<>();
