@@ -19,13 +19,13 @@ public class UserRepository {
         users.add(user);
     }
 
-    public Optional<User> findById(UUID id) {
+    public Optional<User> findById(String id) {
         return users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst();
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 
