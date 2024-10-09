@@ -3,7 +3,6 @@ package com.zookeeper.model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Data
 public class Loan {
 
-    private UUID id;
+    private String id;
     private User user;
     private Book book;
     private LocalDate loanDate;
