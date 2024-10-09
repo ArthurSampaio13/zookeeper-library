@@ -1,6 +1,6 @@
 package com.zookeeper.controller;
 
-import com.zookeeper.DTO.CreateBookDTO;
+import com.zookeeper.dto.CreateBookDTO;
 import com.zookeeper.config.Config;
 import com.zookeeper.model.Book;
 import com.zookeeper.service.BookService;

@@ -1,6 +1,6 @@
 package com.zookeeper.service;
 
-import com.zookeeper.DTO.CreateBookDTO;
+import com.zookeeper.dto.CreateBookDTO;
 import com.zookeeper.model.Book;
 import com.zookeeper.repository.BookRepository;
 
