@@ -54,14 +54,14 @@ public class LoanService {
 
         String id = createdPath.substring(path.length());
 
-        loan.setId(UUID.fromString(id));
+        loan.setId(id);
 
         loanRepository.getLoanList().add(loan);
 
         zooKeeper.delete(createdPath, -1);
     }
 
-    public Loan getLoan(UUID id) {
+    public Loan getLoan(String id) {
         return loanRepository.getLoanList()
                 .stream()
                 .filter(loan -> loan.getId().equals(id))

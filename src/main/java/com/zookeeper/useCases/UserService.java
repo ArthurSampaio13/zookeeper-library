@@ -29,13 +29,13 @@ public class UserService {
         String path = parentPath + "/user-";
         String createdPath = zooKeeper.create(path, null, org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE, org.apache.zookeeper.CreateMode.PERSISTENT_SEQUENTIAL);
         String id = createdPath.substring(path.length());
-        user.setId(UUID.fromString(id));
+        user.setId((id));
         userRepository.findAll().add(user);
         zooKeeper.delete(createdPath, -1);
 
     }
 
-    public User getUser(UUID id) throws InterruptedException, KeeperException {
+    public User getUser(String id) throws InterruptedException, KeeperException {
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getId().equals(id))
