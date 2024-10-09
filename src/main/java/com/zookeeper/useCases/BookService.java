@@ -26,33 +26,26 @@ public class BookService {
 
         int idBook = (bookRepository.getBooks().size()) + 1;
 
-        // Cria o objeto Book a partir do DTO
         Book book = new Book(Integer.toString(idBook), createBookDTO.getTitle(), createBookDTO.getGenre(),
                 createBookDTO.getDescription(), createBookDTO.getAuthor(),
                 createBookDTO.getReleaseYear());
 
         String parentPath = "/books";
 
-        // Verifica se o nó pai existe e o cria se não existir
         if (zooKeeper.exists(parentPath, false) == null) {
             zooKeeper.create(parentPath, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         }
 
-        // Cria um caminho único para o livro
         String path = parentPath + "/book-";
         String createdPath = zooKeeper.create(path, bookToBytes(book), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
 
-        // Define o ID do livro a partir do caminho criado
         String id = createdPath.substring(path.length());
         book.setId(id);
 
-        // Salva o livro no repositório em memória (opcional)
         bookRepository.save(book);
     }
 
     private byte[] bookToBytes(Book book) {
-        // Implemente a lógica de conversão do objeto Book para bytes (por exemplo, usando JSON)
-        // Aqui um exemplo simples, substitua pela lógica real conforme necessário
         return String.format("%s,%s,%s,%s,%s,%d",
                         book.getId(), book.getTitle(), book.getGenre(),
                         book.getDescription(), book.getAuthor(), book.getReleaseYear())
@@ -85,7 +78,6 @@ public class BookService {
             System.out.println("Nó não existe");
         }
 
-        // Remove o livro do repositório em memória
         bookRepository.deleteById(id);
     }
 
@@ -96,12 +88,11 @@ public class BookService {
     }
 
     private Book bytesToBook(byte[] data) {
-        // Implemente a lógica para converter os bytes de volta para um objeto Book
         String dataString = new String(data);
         String[] fields = dataString.split(",");
 
         if (fields.length != 6) {
-            return null; // ou lance uma exceção se os dados não estiverem no formato esperado
+            return null;
         }
 
         return new Book(fields[0], fields[1], fields[2], fields[3], fields[4], Integer.parseInt(fields[5]));

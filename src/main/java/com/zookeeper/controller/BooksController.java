@@ -54,7 +54,7 @@ public class BooksController {
         } catch (KeeperException e) {
             return ResponseEntity.status(500).body("Erro ao acessar o Zookeeper: " + e.getMessage());
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();  // Boa prática ao capturar InterruptedException
+            Thread.currentThread().interrupt();
             return ResponseEntity.status(500).body("A operação foi interrompida: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro inesperado: " + e.getMessage());
@@ -115,10 +115,10 @@ public class BooksController {
             if (book != null) {
                 return ResponseEntity.ok(book);
             } else {
-                return ResponseEntity.status(404).body(null); // Livro não encontrado
+                return ResponseEntity.status(404).body(null);
             }
         } catch (KeeperException | InterruptedException e) {
-            return ResponseEntity.status(500).body(null); // Erro ao acessar o ZooKeeper
+            return ResponseEntity.status(500).body(null);
         }
     }
 
