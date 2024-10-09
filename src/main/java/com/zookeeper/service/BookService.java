@@ -1,4 +1,4 @@
-package com.zookeeper.useCases;
+package com.zookeeper.service;
 
 import com.zookeeper.DTO.CreateBookDTO;
 import com.zookeeper.model.Book;
@@ -8,7 +8,6 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

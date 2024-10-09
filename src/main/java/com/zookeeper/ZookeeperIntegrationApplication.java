@@ -2,8 +2,8 @@ package com.zookeeper;
 
 import com.zookeeper.config.Config;
 import com.zookeeper.model.Book;
-import com.zookeeper.useCases.BookService;
-import com.zookeeper.useCases.ClusterInformationService;
+import com.zookeeper.service.BookService;
+import com.zookeeper.service.ClusterInformationService;
 import com.zookeeper.zookeeper.service.ZookeeperService;
 import com.zookeeper.zookeeper.watcher.AllClusterNodesChangeListener;
 import com.zookeeper.zookeeper.watcher.ConnectStateChangeListener;

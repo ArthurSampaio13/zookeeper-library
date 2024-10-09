@@ -1,6 +1,6 @@
 package com.zookeeper.zookeeper.watcher;
 
-import com.zookeeper.useCases.ClusterInformationService;
+import com.zookeeper.service.ClusterInformationService;
 
 import org.I0Itec.zkclient.IZkChildListener;
 import org.springframework.stereotype.Component;

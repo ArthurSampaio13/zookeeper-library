@@ -1,4 +1,4 @@
-package com.zookeeper.useCases;
+package com.zookeeper.service;
 
 import com.zookeeper.repository.ClusterInformationRepository;
 

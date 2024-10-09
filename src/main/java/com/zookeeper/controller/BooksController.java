@@ -3,8 +3,8 @@ package com.zookeeper.controller;
 import com.zookeeper.DTO.CreateBookDTO;
 import com.zookeeper.config.Config;
 import com.zookeeper.model.Book;
-import com.zookeeper.useCases.BookService;
-import com.zookeeper.useCases.ClusterInformationService;
+import com.zookeeper.service.BookService;
+import com.zookeeper.service.ClusterInformationService;
 
 import org.apache.zookeeper.KeeperException;
 import org.springframework.http.HttpEntity;
@@ -20,7 +20,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import static org.springframework.util.StringUtils.isEmpty;
 

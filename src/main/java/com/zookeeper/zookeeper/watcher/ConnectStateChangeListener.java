@@ -2,8 +2,8 @@ package com.zookeeper.zookeeper.watcher;
 
 import com.zookeeper.config.Config;
 import com.zookeeper.model.Book;
-import com.zookeeper.useCases.BookService;
-import com.zookeeper.useCases.ClusterInformationService;
+import com.zookeeper.service.BookService;
+import com.zookeeper.service.ClusterInformationService;
 import com.zookeeper.zookeeper.service.ZookeeperService;
 
 import org.I0Itec.zkclient.IZkStateListener;
