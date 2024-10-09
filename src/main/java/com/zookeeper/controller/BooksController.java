@@ -46,20 +46,20 @@ public class BooksController {
         return ResponseEntity.ok().body(book);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable String id) {
-        try {
-            bookService.deleteBook(id);
-            return ResponseEntity.ok("Livro deletado com sucesso.");
-        } catch (KeeperException e) {
-            return ResponseEntity.status(500).body("Erro ao acessar o Zookeeper: " + e.getMessage());
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();  // Boa prática ao capturar InterruptedException
-            return ResponseEntity.status(500).body("A operação foi interrompida: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro inesperado: " + e.getMessage());
-        }
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteBook(@PathVariable String id) {
+//        try {
+//            bookService.deleteBook(id);
+//            return ResponseEntity.ok("Livro deletado com sucesso.");
+//        } catch (KeeperException e) {
+//            return ResponseEntity.status(500).body("Erro ao acessar o Zookeeper: " + e.getMessage());
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();  // Boa prática ao capturar InterruptedException
+//            return ResponseEntity.status(500).body("A operação foi interrompida: " + e.getMessage());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(500).body("Erro inesperado: " + e.getMessage());
+//        }
+//    }
 
     @PostMapping("/add")
     public ResponseEntity<String> addBook(HttpServletRequest request, @RequestBody CreateBookDTO book) throws InterruptedException, KeeperException {
