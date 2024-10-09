@@ -7,7 +7,6 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.PanelUI;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,13 +30,13 @@ public class UserService {
         String path = parentPath + "/user-";
         String createdPath = zooKeeper.create(path, null, org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE, org.apache.zookeeper.CreateMode.PERSISTENT_SEQUENTIAL);
         String id = createdPath.substring(path.length());
-        user.setId(UUID.fromString(id));
+        user.setId(id);
         userRepository.findAll().add(user);
         zooKeeper.delete(createdPath, -1);
 
     }
 
-    public User getUser(UUID id) throws InterruptedException, KeeperException {
+    public User getUser(String id) throws InterruptedException, KeeperException {
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getId().equals(id))
@@ -49,7 +48,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void deleteUser(UUID id) throws InterruptedException, KeeperException {
+    public void deleteUser(String id) throws InterruptedException, KeeperException {
         String path = "/users/user-" + id;
 
         if (zooKeeper.exists(path, false) != null) {
@@ -58,7 +57,7 @@ public class UserService {
         } else {
             System.out.println("User not found");
         }
-        userRepository.deleteById(id);
+        userRepository.deleteById(UUID.fromString(id));
 
 
     }

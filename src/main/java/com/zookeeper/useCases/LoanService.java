@@ -27,8 +27,8 @@ public class LoanService {
     private final LoanRepository loanRepository;
     private final ZooKeeper zooKeeper;
 
-    public void addLoan(UUID idUser, String idBook) throws InterruptedException, KeeperException {
-        Optional<User> userOpt = userRepository.findById(idUser);
+    public void addLoan(String idUser, String idBook) throws InterruptedException, KeeperException {
+        Optional<User> userOpt = userRepository.findById(UUID.fromString(idUser));
         Optional<Book> bookOpt = bookRepository.findById(idBook);
 
         if (userOpt.isEmpty()) {
@@ -54,14 +54,14 @@ public class LoanService {
 
         String id = createdPath.substring(path.length());
 
-        loan.setId(UUID.fromString(id));
+        loan.setId(id);
 
         loanRepository.getLoanList().add(loan);
 
         zooKeeper.delete(createdPath, -1);
     }
 
-    public Loan getLoan(UUID id) {
+    public Loan getLoan(String id) {
         return loanRepository.getLoanList()
                 .stream()
                 .filter(loan -> loan.getId().equals(id))
@@ -72,7 +72,7 @@ public class LoanService {
         return loanRepository.getLoanList();
     }
 
-    public void deleteLoan(UUID id) throws KeeperException, InterruptedException {
+    public void deleteLoan(String id) throws KeeperException, InterruptedException {
         String path = "/loans/loan-" + id;
 
         if (zooKeeper.exists(path, false) != null) {
@@ -81,6 +81,6 @@ public class LoanService {
         } else {
             System.out.println("Loan not found");
         }
-        loanRepository.deleteById(id);
+        loanRepository.deleteById(UUID.fromString(id));
     }
 }

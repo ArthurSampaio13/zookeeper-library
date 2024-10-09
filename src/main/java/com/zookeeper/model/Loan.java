@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 public class Loan {
 
-    private UUID id;
+    private String id;
     private User user;
     private Book book;
     private LocalDate loanDate;
