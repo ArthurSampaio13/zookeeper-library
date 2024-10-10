@@ -56,12 +56,13 @@ public class BookService {
         bookRepository.getBooks().addAll(books);
     }
 
-    public Book getBook(String id) {
+    public Book getBook(String id) throws InterruptedException, KeeperException {
+
         return bookRepository.getBooks()
                 .stream()
                 .filter(book -> book.getId().equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElse(getBookFromZooKeeper(id));
     }
 
     public List<Book> getAllBooks(){

@@ -40,7 +40,7 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable String id) {
+    public ResponseEntity<Book> getBookById(@PathVariable String id) throws InterruptedException, KeeperException {
         Book book = bookService.getBook(id);
         return ResponseEntity.ok().body(book);
     }

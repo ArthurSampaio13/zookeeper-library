@@ -1,18 +1,18 @@
 package com.zookeeper.zookeeper.watcher;
 
-import com.zookeeper.service.ClusterInformationService;
-import com.zookeeper.zookeeper.service.ZookeeperService;
+        import com.zookeeper.service.ClusterInformationService;
+        import com.zookeeper.zookeeper.service.ZookeeperService;
 
-import org.I0Itec.zkclient.IZkChildListener;
-import org.springframework.stereotype.Component;
+        import org.I0Itec.zkclient.IZkChildListener;
+        import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
+        import java.util.Collections;
+        import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+        import lombok.RequiredArgsConstructor;
+        import lombok.extern.slf4j.Slf4j;
 
-import static com.zookeeper.config.Config.ELECTION_NODE;
+        import static com.zookeeper.config.Config.ELECTION_NODE;
 
 @Component
 @RequiredArgsConstructor
