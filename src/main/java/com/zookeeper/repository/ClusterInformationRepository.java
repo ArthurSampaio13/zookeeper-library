@@ -11,18 +11,9 @@ import lombok.Data;
 @Data
 public class ClusterInformationRepository {
 
-    /**
-     * Name of the master node in the cluster
-     */
     private String masterNode;
 
-    /**
-     * List with all persistent Apache Zookeeper znodes in the cluster (both live and terminated)
-     */
     private final List<String> allClusterNodes = new ArrayList<>();
 
-    /**
-     * List with  live ephemeral Apache Zookeeper znodes in the cluster
-     */
     private final List<String> liveClusterNodes = new ArrayList<>();
 }
