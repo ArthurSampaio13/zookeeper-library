@@ -26,6 +26,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 @RestController
 @RequestMapping("v1/books/")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class BooksController {
 
     private final BookService bookService;
@@ -66,7 +67,7 @@ public class BooksController {
 
         if (!isEmpty(requestFrom) && requestFrom.equalsIgnoreCase(masterNode)) {
             bookService.addBook(book);
-            return ResponseEntity.ok("SUCCESS: Book added in ZooKeeper.");
+            return ResponseEntity.ok("Sucesso: Livro adicionado ao ZooKeeper.");
         }
 
         if (isMaster()) {
@@ -90,7 +91,7 @@ public class BooksController {
                 }
             }
 
-            return ResponseEntity.ok("Successfully updated " + successCount + " nodes");
+            return ResponseEntity.ok("Atualizado com sucesso: " + successCount + " nodes");
         } else {
             String requestUrl = "http://" + masterNode + "/v1/books/add" + "/";
             HttpHeaders headers = new HttpHeaders();
